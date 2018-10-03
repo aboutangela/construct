@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-struct single{ char* artist; char* song;};
+struct single{char* artist; char* song;};
+//struct single current;
 
 char * artists[] = {
   "smash mouth",
@@ -11,28 +14,39 @@ char * artists[] = {
 char * songs[] = {
   "all star",
   "dysentary gary",
-  "in bloom,"
+  "in bloom",
 };
 
-struct single example(){
-  struct single x;
-  x.artist = artists[0];
-  x.song = songs[0];
+struct single example(struct single x){
+  srand(time(NULL));
+  x.artist = artists[rand() % 3];
+  x.song = songs[rand() % 3];
   return x;
  }
 
-int print(){
-  printf("artist: %s, ",example().artist);
-  printf("song: %s \n", example().song);
+int print(struct single x){
+  printf("artist: %s, ", x.artist);
+  printf("song: %s \n", x.song);
   return 0;
 }
 
-int modify(){
-  example();
+int modify(struct single x){
+  char * art = x.artist;
+  char * son = x.song;
+  *art = artists[rand() % 3];
+  *son = songs[rand() % 3];
+  //x.artist = artists[rand() % 3];
+  //x.song = songs[rand() % 3];
   return 0;
 }
 
 int main(){
-  print();
+  struct single current;
+  current = example(current);
+  printf("original struct: \n");
+  print(current);
+  modify(current);
+  printf("modified struct: \n");
+  print(current);
   return 0;
 }
